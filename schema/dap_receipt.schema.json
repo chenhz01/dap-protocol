@@ -1,0 +1,77 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://github.com/chenhz01/dap-protocol/schema/dap_receipt.schema.json",
+ "title": "DAP Acceptance Receipt",
+ "description": "RFC-DAP-0001 machine-verifiable delivery acceptance receipt",
+ "type": "object",
+ "license": "CC-BY-4.0",
+ "required": [
+  "dap_version", "protocol_sha256", "project_id", "run_at",
+  "criterion_before_evidence", "claims", "counts", "delivered_ratio",
+  "delivered_ratio_wilson95", "mutation_probe", "verdict",
+  "semantic_scope", "four_non_claims_respected"
+ ],
+ "properties": {
+  "dap_version": {"type": "string"},
+  "protocol_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+  "project_id": {"type": "string"},
+  "run_at": {"type": "string", "format": "date-time"},
+  "criterion_before_evidence": {"const": true},
+  "claims": {
+   "type": "array", "minItems": 1,
+   "items": {
+    "type": "object",
+    "required": ["id", "proposal_claim", "evidence_type", "pass_condition", "verdict", "semantic"],
+    "properties": {
+     "id": {"type": "string"},
+     "proposal_claim": {"type": "string"},
+     "evidence_type": {"enum": ["command", "artifact", "log"]},
+     "pass_condition": {"type": "string"},
+     "verdict": {"enum": ["delivered", "partial", "missing"]},
+     "semantic": {"type": "boolean"},
+     "human_recheck": {
+      "type": "object",
+      "properties": {
+       "reviewer": {"type": "string"},
+       "sample_n": {"type": "integer", "minimum": 0},
+       "agreed": {"type": "integer", "minimum": 0},
+       "note": {"type": "string"}
+      }
+     },
+     "note": {"type": "string"}
+    }
+   }
+  },
+  "counts": {
+   "type": "object",
+   "required": ["delivered", "partial", "missing"],
+   "properties": {
+    "delivered": {"type": "integer", "minimum": 0},
+    "partial": {"type": "integer", "minimum": 0},
+    "missing": {"type": "integer", "minimum": 0}
+   }
+  },
+  "delivered_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+  "delivered_ratio_wilson95": {
+   "type": "array", "minItems": 2, "maxItems": 2,
+   "items": {"type": "number", "minimum": 0, "maximum": 1}
+  },
+  "mutation_probe": {
+   "type": "object",
+   "required": ["mutations", "caught", "catch_ratio_wilson95", "method"],
+   "properties": {
+    "mutations": {"type": "integer", "minimum": 0},
+    "caught": {"type": "integer", "minimum": 0},
+    "catch_ratio_wilson95": {"type": "array", "minItems": 2, "maxItems": 2,
+     "items": {"type": "number", "minimum": 0, "maximum": 1}},
+    "method": {"type": "string"},
+    "gmb_link": {"type": "string"}
+   }
+  },
+  "verdict": {"enum": ["PASS", "PARTIAL", "FAIL"]},
+  "verdict_basis": {"type": "string"},
+  "semantic_scope": {"enum": ["unverified", "manual-recheck-required"]},
+  "four_non_claims_respected": {"const": true},
+  "license": {"const": "CC-BY-4.0"}
+ }
+}

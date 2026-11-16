@@ -1,0 +1,81 @@
+{
+ "dap_version": "0.1",
+ "protocol_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+ "project_id": "[redacted internal delivery]",
+ "run_at": "2026-11-16T20:00:00+08:00",
+ "criterion_before_evidence": true,
+ "claims": [
+  {
+   "id": "C1",
+   "proposal_claim": "交付导出 CSV 功能（结构）",
+   "evidence_type": "command",
+   "pass_condition": "python -m app export --out x.csv 退出0且表头匹配",
+   "verdict": "delivered",
+   "semantic": false
+  },
+  {
+   "id": "C2",
+   "proposal_claim": "交付登录鉴权模块（结构）",
+   "evidence_type": "command",
+   "pass_condition": "pytest tests/test_auth.py 全绿",
+   "verdict": "delivered",
+   "semantic": false
+  },
+  {
+   "id": "C3",
+   "proposal_claim": "报表数字与源表一致（语义）",
+   "evidence_type": "artifact",
+   "pass_condition": "抽样20行人工对账",
+   "verdict": "delivered",
+   "semantic": true,
+   "human_recheck": {
+    "reviewer": "third-party",
+    "sample_n": 20,
+    "agreed": 19,
+    "note": "1 行口径分歧，标注待议"
+   }
+  },
+  {
+   "id": "C4",
+   "proposal_claim": "交付部署文档",
+   "evidence_type": "artifact",
+   "pass_condition": "docs/deploy.md 存在且可跟随",
+   "verdict": "partial",
+   "semantic": false,
+   "note": "存在但缺回滚章节"
+  },
+  {
+   "id": "C5",
+   "proposal_claim": "交付性能报告",
+   "evidence_type": "log",
+   "pass_condition": "benchmark.log 含 P95",
+   "verdict": "missing",
+   "semantic": false
+  }
+ ],
+ "counts": {
+  "delivered": 3,
+  "partial": 1,
+  "missing": 1
+ },
+ "delivered_ratio": 0.6,
+ "delivered_ratio_wilson95": [
+  0.2307,
+  0.8824
+ ],
+ "mutation_probe": {
+  "mutations": 2,
+  "caught": 2,
+  "catch_ratio_wilson95": [
+   0.3424,
+   1.0
+  ],
+  "method": "对 C1/C2 各做1处改坏（删表头/反转鉴权判断），验收器均报警；调用 GMB 协议思想",
+  "gmb_link": "见 gmb-protocol RFC-0001：无检出力的验收器=背答案"
+ },
+ "verdict": "PARTIAL",
+ "verdict_basis": "delivered_ratio=0.6<0.8 且有1项 missing——验收口径先定后测、变异抽检有检出力，但交付未达标，不可断言通过",
+ "semantic_scope": "manual-recheck-required",
+ "four_non_claims_respected": true,
+ "license": "CC-BY-4.0"
+}

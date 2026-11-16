@@ -1,0 +1,49 @@
+{
+ "tool": "DAP provenance anchors (pulled 2026-11-16)",
+ "license": "CC-BY-4.0",
+ "note": "机会库 M46 旧快照数字已过时，本文件全部用 2026-11-16 实拉值并带版本限定",
+ "anchors": [
+  {
+   "source": "科研",
+   "id": "arXiv:2611.14581v1",
+   "title": "When Evaluators of AI Agents Disagree: An Empirical Study of Native Scoring, LLM Judges, and Commit-Boundary Checks on tau2-bench",
+   "submitted": "2026-11-10",
+   "verified_via": "WebFetch arxiv.org/abs/2611.14581, 2026-11-16",
+   "key_facts": [
+    "2,160 episodes (tau2-bench airline + retail)",
+    "LLM judge repeated verdict 98.2% but agreed with native scoring only 56.2%",
+    "11 forbidden writes; judge passed 10-11, stronger judge passed 6",
+    "boundary evaluator (no model call) caught all 11; no judge significantly exceeded it on human labels"
+   ],
+   "relevance": "直接支撑'最小可复跑判据 > LLM judge'——DAP 结构对账 + 边界检查的学术锚"
+  },
+  {
+   "source": "GitHub",
+   "repo": "affaan-m/ECC",
+   "verified_via": "gh api repos/affaan-m/ECC, 2026-11-16",
+   "stargazers": 304243,
+   "license": "MIT",
+   "pushed_at": "2026-11-16T04:55:46Z",
+   "merged_pr_evidence": [
+    "#3727 docs: integrate four reviewed workflow guidance PRs",
+    "#3740 docs: distinguish target acceptance from local verification",
+    "#3751 docs: add prepared verifier and effect state evaluation",
+    "#3750 docs: add public feedback goal fidelity evaluation",
+    "#3776 fix(run-with-flags): fail closed for oversized Bash GateGuard input"
+   ],
+   "note": "机会库 M46 旧快照'3 条 PR/946 处改动/13 次 review'为早期状态，已过时；本条为实拉现值。验收方法论被第三方真实采纳的 E1 级证据。"
+  },
+  {
+   "source": "内部实证（已脱敏）",
+   "artifact": "[redacted internal dossier] hold-out validation record",
+   "verified_via": "本地 evidence/holdout_validation_v14.json 读取, 2026-11-16",
+   "key_facts": {
+    "TPR_all": 1.0, "TPR_all_wilson95": [0.7575, 1.0],
+    "TPR_semantic": 0.0, "TPR_semantic_wilson95": [0.0, 0.2425],
+    "FPR_semantic": 0.0, "negative_control_pass": true,
+    "coupling_delta": -1.0
+   },
+   "relevance": "DAP self-bootstrap 来源；语义 TPR=0 是本协议诚实边界的核心证据（结构可复跑、语义不可自动判）"
+  }
+ ]
+}

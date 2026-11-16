@@ -1,0 +1,14 @@
+{
+ "tool": "DAP end-to-end verification",
+ "date": "2026-11-16",
+ "license": "CC-BY-4.0",
+ "checks": [
+  {"case": "selftest 三例", "expect": "3/3 ALL-PASS exit=0", "got": "3/3 ALL-PASS", "exit": 0, "result": "PASS"},
+  {"case": "sample_acceptance（3 delivered/1 partial/1 missing, ratio=0.6）", "expect": "PARTIAL exit=1（阈值未达标是 PARTIAL 非 FAIL）", "got": "PARTIAL, issues=[]", "exit": 1, "result": "PASS"},
+  {"case": "红牌负对照 criterion_before_evidence=false", "expect": "FAIL exit=2", "got": "FAIL, RED:criterion_before_evidence", "exit": 2, "result": "PASS"},
+  {"case": "语义虚标（semantic=true & delivered & 无 human_recheck）", "expect": "FAIL", "got": "FAIL, SEMANTIC 抓出", "exit": 2, "result": "PASS"},
+  {"case": "变异零检出 caught=0", "expect": "FAIL", "got": "FAIL, 验收器摆设抓出", "exit": 2, "result": "PASS"}
+ ],
+ "design_fix_logged": "初版把 delivered_ratio<阈值 记为 BELOW issue→误判 FAIL；已修正为 PARTIAL 判据输入（阈值未达标=交付没做好，不是验收作弊）。同类语义 bug 已写入 RFC §4.1 与 AGENTS.md。",
+ "verdict": "PASS"
+}

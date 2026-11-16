@@ -1,0 +1,21 @@
+{
+ "tool": "DAP F5 clean-env reproduction (REV70 F5)",
+ "date": "2026-11-16",
+ "license": "CC-BY-4.0",
+ "method": "只把待推送公开文件复制到全新临时目录（非原地），从零跑 README 命令；无源码外本地依赖、无网络",
+ "env": "python 3.13.12 (managed), Windows, 标准库 only",
+ "files_present": [
+  "src/dap.py", "spec/RFC-DAP-0001.md", "schema/dap_receipt.schema.json",
+  "examples/sample_acceptance.json", "evidence/*.json",
+  "README.md", "LICENSE", "LICENSE-CODE", "LICENSE-DOCS", "AGENTS.md"
+ ],
+ "checks": [
+  {"cmd": "python src/dap.py selftest", "expect": "3/3 ALL-PASS exit=0", "got": "3/3 ALL-PASS", "exit": 0, "result": "PASS"},
+  {"cmd": "python src/dap.py init --project-id clean --out protocol.json", "expect": "exit=0 + sha256", "got": "sha256=609f5921...7830", "exit": 0, "result": "PASS"},
+  {"cmd": "python src/dap.py verify --receipt examples/sample_acceptance.json", "expect": "PARTIAL exit=1", "got": "PARTIAL, counts 复算一致", "exit": 1, "result": "PASS"}
+ ],
+ "third_party_imports": 0,
+ "network_calls": 0,
+ "verdict": "PASS",
+ "note": "exit=1 是 PARTIAL（交付未达标/不可断言）的预期退出码，不是失败；F5 判据是干净机器一条命令复现一致，实测达成"
+}
